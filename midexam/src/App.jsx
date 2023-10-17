@@ -84,25 +84,37 @@ function App() {
   const [person, setPerson] = useState({
     name: "",
     age: 0,
+    location: "",
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
-    console.log(name, value);
+    //console.log(name, value);
 
     setPerson({ [name]: value });
-    console.log("state data : ", person.name);
+    //console.log("state data : ", person.city);
   }
 
   function filterData(event) {
     console.log(person.name);
 
     const filtered = sampleData.filter((data) => {
-      return data.name == person.name || data.age == person.age;
+      console.log(data.city, person.city);
+      return (
+        data.name == person.name ||
+        data.age == person.age ||
+        data.city == person.city ||
+        data.occupation == person.occupation
+      );
     });
     //console.log(filtered);
 
     setData(filtered);
+  }
+
+  function resetData() {
+    //console.log("Reset Function");
+    setData(sampleData);
   }
 
   return (
@@ -136,13 +148,50 @@ function App() {
         <input type="text" name="name" onChange={handleChange} />
         <label> Age : </label>
         <input type="text" name="age" onChange={handleChange} />
+
         <br />
-        <button onClick={filterData}>Filter </button>
+        <div>
+          <span>
+            <label>City :</label>
+            <select name="city" onChange={handleChange}>
+              <option value="New York">New York</option>
+              <option value="San Fransico">San Fransico</option>
+              <option value="Chicago">Chicago</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="Houston">Houston</option>
+              <option value="Miami">Miami</option>
+              <option value="Seattle">Seattle</option>
+              <option value="Boston">Boston</option>
+              <option value="Denver">Denver</option>
+              <option value="Atlanta">Atlanta</option>
+            </select>
+          </span>
+
+          <span>
+            <label> Occupation :</label>
+            <select name="occupation" onChange={handleChange}>
+              <option value="Engineer">Engineer</option>
+              <option value="Designer">Designer</option>
+              <option value="Accountant">Accountant</option>
+              <option value="Teacher">Teacher</option>
+              <option value="Doctor">Doctor</option>
+              <option value="Artist">Artist</option>
+              <option value="Software Engineer">Software Engineer</option>
+              <option value="Lawyer">Lawyer</option>
+              <option value="Marketing Manager">Marketing Manager</option>
+              <option value="Entrepreneur">Entrepreneur</option>
+            </select>
+          </span>
+        </div>
+
         <br />
-        <select>
-          <option value="city">city</option>
-          <option value="occupation">occupation</option>
-        </select>
+
+        <div>
+          <button onClick={filterData}>Filter </button>
+        </div>
+        <div>
+          <button onClick={resetData}>Reset Data</button>
+        </div>
       </div>
     </>
   );
