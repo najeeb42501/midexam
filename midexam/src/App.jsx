@@ -81,6 +81,29 @@ function App() {
   ];
 
   const [data, setData] = useState(sampleData);
+  const [person, setPerson] = useState({
+    name: "",
+    age: 0,
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    console.log(name, value);
+
+    setPerson({ [name]: value });
+    console.log("state data : ", person.name);
+  }
+
+  function filterData(event) {
+    console.log(person.name);
+
+    const filtered = sampleData.filter((data) => {
+      return data.name == person.name || data.age == person.age;
+    });
+    //console.log(filtered);
+
+    setData(filtered);
+  }
 
   return (
     <>
@@ -110,10 +133,12 @@ function App() {
 
       <div>
         <label>Name : </label>
-        <input type="text" name="name" />
+        <input type="text" name="name" onChange={handleChange} />
         <label> Age : </label>
-        <input type="text" name="age" />
-        <button>Reset</button>
+        <input type="text" name="age" onChange={handleChange} />
+        <br />
+        <button onClick={filterData}>Filter </button>
+        <br />
         <select>
           <option value="city">city</option>
           <option value="occupation">occupation</option>
